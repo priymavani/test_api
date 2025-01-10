@@ -2,6 +2,18 @@ const express = require('express');
 const { MongoClient} = require('mongodb');
 const { ObjectId } = require('mongodb');
 const cors = require('cors');
+
+// CORS Configuration
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your frontend's origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    credentials: true, // Enable credentials (e.g., cookies)
+};
+
+// Apply CORS Middleware
+app.use(cors(corsOptions));
+
 // const cros = require('cros');
 const app = express();
 const port = 4000;
@@ -14,15 +26,9 @@ const dbName = "codinggita";
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
 let db, courses;
 
-const corsOptions = {
-    origin: 'http://localhost:5173', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, 
-};
 
 app.use(cors(corsOptions));
 

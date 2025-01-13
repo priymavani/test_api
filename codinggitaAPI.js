@@ -34,7 +34,9 @@ let db, courses;
 // Connect to MongoDB and initialize collections
 async function initializeDatabase() {
     try {
-        const client = await MongoClient.connect(uri,);
+        const client = await MongoClient.connect(uri,{
+            useUnifiedTopology: true
+        });
         console.log("Connected to MongoDB");
 
         db = client.db(dbName);
@@ -42,17 +44,24 @@ async function initializeDatabase() {
         courses = db.collection("courses");
 
         // Start server after successful DB connection
-        app.listen(port, () => {
+        app.listen(port, '0.0.0.0' ,() => {
             console.log(`Server running at http://localhost:${port}`);
         });
     } catch (err) {
         console.error("Error connecting to MongoDB:", err);
-        process.exit(1); // Exit if database connection fails
+        // process.exit(1); // Exit if database connection fails
+
+        if (client) {
+            await client.close();
+        }
+        // Don't exit process, just log error
+        console.error("Failed to connect to database");
     }
 }
 
 // Initialize Database
-initializeDatabase();
+// initializeDatabase();
+initializeDatabase().catch(console.error);
 
 // Routes
 

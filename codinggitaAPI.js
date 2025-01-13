@@ -3,20 +3,21 @@ const { MongoClient} = require('mongodb');
 const { ObjectId } = require('mongodb');
 const cors = require('cors');
 
+// const cros = require('cros');
+const app = express();
+const port = 4000;
+
 // CORS Configuration
 const corsOptions = {
     origin: 'http://localhost:5173', // Replace with your frontend's origin
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true, // Enable credentials (e.g., cookies)
+    optionsSuccessStatus: 200 // For legacy browser support
 };
 
 // Apply CORS Middleware
 app.use(cors(corsOptions));
-
-// const cros = require('cros');
-const app = express();
-const port = 4000;
 
 // MongoDB connection details
 // const uri = "mongodb://127.0.0.1:27017"; 
@@ -29,8 +30,6 @@ app.use(express.json());
 
 let db, courses;
 
-
-app.use(cors(corsOptions));
 
 // Connect to MongoDB and initialize collections
 async function initializeDatabase() {

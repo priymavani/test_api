@@ -58,7 +58,7 @@ async function initializeDatabase() {
         console.error("Failed to connect to database");
     }
 }
-
+//ok
 // Initialize Database
 // initializeDatabase();
 initializeDatabase().catch(console.error);
